@@ -24,7 +24,7 @@ export default function NewAuditionPage() {
 
   function handleFile(f: File) {
     if (f.type !== 'application/pdf') {
-      setError('Please upload a PDF file.')
+      setError('Por favor, sube un archivo PDF.')
       return
     }
     setFile(f)
@@ -39,8 +39,8 @@ export default function NewAuditionPage() {
   }
 
   async function handleUpload() {
-    if (!title.trim()) { setError('Please enter a preparation name.'); return }
-    if (!file) { setError('Please upload a PDF.'); return }
+    if (!title.trim()) { setError('Introduce un nombre para la preparacion.'); return }
+    if (!file) { setError('Por favor, sube un PDF.'); return }
     setError('')
     setStep('uploading')
 
@@ -56,7 +56,7 @@ export default function NewAuditionPage() {
   }
 
   async function handleCreate() {
-    if (!selectedCharacter) { setError('Please select your character.'); return }
+    if (!selectedCharacter) { setError('Por favor, selecciona tu personaje.'); return }
     setError('')
     setStep('creating')
 
@@ -73,7 +73,7 @@ export default function NewAuditionPage() {
       masteredSegments: 0,
     }
     addPreparation(newPrep)
-    setToast('Preparation created!')
+    setToast('¡Preparacion creada!')
     setTimeout(() => navigate(`/app/auditions/${newPrep.id}/practice`), 500)
   }
 
@@ -82,9 +82,18 @@ export default function NewAuditionPage() {
       <NavBar variant="app" />
 
       <main className="max-w-lg mx-auto px-4 pb-16 pt-4 md:px-6">
-        <div className="mb-8">
-          <h1 className="font-serif text-3xl font-bold text-ink-900 mb-1">New preparation</h1>
-          <p className="text-sm text-ink-400">Upload your sides and pick your character.</p>
+        <div className="flex items-start gap-3 mb-8">
+          <button
+            onClick={() => navigate(-1)}
+            className="btn-ghost p-2 mt-0.5 shrink-0 text-2xl leading-none"
+            aria-label="Volver"
+          >
+            ←
+          </button>
+          <div>
+            <h1 className="font-serif text-3xl font-bold text-ink-900 mb-1">Nueva preparacion</h1>
+            <p className="text-sm text-ink-400">Sube tu guion y elige tu personaje.</p>
+          </div>
         </div>
 
         {/* Step indicator */}
@@ -103,7 +112,7 @@ export default function NewAuditionPage() {
                 {step === 'selectCharacter' && s === 'details' ? '✓' : i + 1}
               </div>
               <span className="text-xs text-ink-400 capitalize hidden sm:block">
-                {s === 'details' ? 'Upload & name' : 'Select character'}
+                {s === 'details' ? 'Subir y nombrar' : 'Elegir personaje'}
               </span>
               {i === 0 && <div className="w-8 h-px bg-parchment-200" />}
             </div>
@@ -115,12 +124,12 @@ export default function NewAuditionPage() {
             <div className="space-y-5">
               <div>
                 <label className="label" htmlFor="prep-title">
-                  Preparation name
+                  Nombre de la preparacion
                 </label>
                 <input
                   id="prep-title"
                   className="input"
-                  placeholder="e.g. Hamlet – To be or not to be"
+                  placeholder="p. ej. Hamlet - Ser o no ser"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   disabled={step === 'uploading'}
@@ -128,7 +137,7 @@ export default function NewAuditionPage() {
               </div>
 
               <div>
-                <label className="label">Script PDF</label>
+                <label className="label">PDF del guion</label>
                 <div
                   onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
                   onDragLeave={() => setDragOver(false)}
@@ -154,14 +163,14 @@ export default function NewAuditionPage() {
                       <div className="text-2xl mb-2">📄</div>
                       <p className="text-sm font-medium text-ink-900">{file.name}</p>
                       <p className="text-xs text-ink-400 mt-1">
-                        {(file.size / 1024).toFixed(0)} KB · Click to replace
+                        {(file.size / 1024).toFixed(0)} KB · Haz clic para cambiar
                       </p>
                     </>
                   ) : (
                     <>
                       <div className="text-3xl mb-3">📥</div>
-                      <p className="text-sm font-medium text-ink-600">Drop your PDF here</p>
-                      <p className="text-xs text-ink-400 mt-1">or click to browse</p>
+                      <p className="text-sm font-medium text-ink-600">Suelta tu PDF aqui</p>
+                      <p className="text-xs text-ink-400 mt-1">o haz clic para buscar</p>
                     </>
                   )}
                 </div>
@@ -170,7 +179,7 @@ export default function NewAuditionPage() {
               {step === 'uploading' && (
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs text-ink-400">
-                    <span>Extracting text & detecting characters…</span>
+                    <span>Extrayendo texto y detectando personajes...</span>
                     <span>{uploadProgress}%</span>
                   </div>
                   <div className="h-2 rounded-full bg-parchment-200">
@@ -193,7 +202,7 @@ export default function NewAuditionPage() {
                 disabled={step === 'uploading'}
                 className="btn-primary w-full py-3 disabled:opacity-60"
               >
-                {step === 'uploading' ? 'Processing…' : 'Upload & parse script'}
+                {step === 'uploading' ? 'Procesando...' : 'Subir y analizar guion'}
               </button>
             </div>
           )}
@@ -202,10 +211,10 @@ export default function NewAuditionPage() {
             <div className="space-y-5">
               <div>
                 <h2 className="font-serif text-xl font-semibold text-ink-900 mb-1">
-                  Select your character
+                  Elige tu personaje
                 </h2>
                 <p className="text-sm text-ink-400">
-                  We detected {characters.length} characters in <span className="font-medium">{file?.name}</span>.
+                  Hemos detectado {characters.length} personajes en <span className="font-medium">{file?.name}</span>.
                 </p>
               </div>
 
@@ -227,12 +236,12 @@ export default function NewAuditionPage() {
 
               <div>
                 <label className="label" htmlFor="custom-char">
-                  Or enter character name manually
+                  O introduce el nombre del personaje a mano
                 </label>
                 <input
                   id="custom-char"
                   className="input"
-                  placeholder="Character name"
+                  placeholder="Nombre del personaje"
                   value={selectedCharacter}
                   onChange={(e) => setSelectedCharacter(e.target.value)}
                 />
@@ -249,14 +258,14 @@ export default function NewAuditionPage() {
                   onClick={() => setStep('details')}
                   className="btn-secondary flex-1 py-3"
                 >
-                  Back
+                  Volver
                 </button>
                 <button
                   onClick={handleCreate}
                   disabled={step === 'creating'}
                   className="btn-primary flex-1 py-3 disabled:opacity-60"
                 >
-                  {step === 'creating' ? 'Creating…' : 'Start practicing'}
+                  {step === 'creating' ? 'Creando...' : 'Empezar a practicar'}
                 </button>
               </div>
             </div>

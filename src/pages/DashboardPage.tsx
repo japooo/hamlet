@@ -33,10 +33,10 @@ const MOCK_PREPARATIONS: AuditionPreparation[] = [
 function timeAgo(iso: string) {
   const ms = Date.now() - new Date(iso).getTime()
   const mins = Math.floor(ms / 60000)
-  if (mins < 60) return `${mins}m ago`
+  if (mins < 60) return `hace ${mins}m`
   const hrs = Math.floor(mins / 60)
-  if (hrs < 24) return `${hrs}h ago`
-  return `${Math.floor(hrs / 24)}d ago`
+  if (hrs < 24) return `hace ${hrs}h`
+  return `hace ${Math.floor(hrs / 24)}d`
 }
 
 function PreparationCard({ prep }: { prep: AuditionPreparation }) {
@@ -49,7 +49,7 @@ function PreparationCard({ prep }: { prep: AuditionPreparation }) {
         <div className="min-w-0">
           <h3 className="font-serif text-lg font-semibold text-ink-900 truncate">{prep.title}</h3>
           <p className="text-xs text-ink-400 mt-0.5">
-            {prep.selectedCharacter} · last practiced {prep.lastPracticed ? timeAgo(prep.lastPracticed) : 'never'}
+            {prep.selectedCharacter} · ultimo ensayo {prep.lastPracticed ? timeAgo(prep.lastPracticed) : 'nunca'}
           </p>
         </div>
         <span className="shrink-0 rounded-full bg-gold-400/10 border border-gold-400/20 px-2.5 py-0.5 text-xs font-medium text-gold-600">
@@ -60,17 +60,17 @@ function PreparationCard({ prep }: { prep: AuditionPreparation }) {
       <ProgressBar
         value={mastered}
         max={total}
-        label={`${mastered} / ${total} lines mastered`}
+        label={`${mastered} / ${total} lineas dominadas`}
         color="gold"
         size="sm"
       />
 
       <div className="flex gap-2 mt-1">
         <Link to={`/app/auditions/${prep.id}/practice`} className="btn-primary flex-1 text-center text-sm py-2">
-          Practice
+          Practicar
         </Link>
         <Link to={`/app/auditions/${prep.id}/state`} className="btn-secondary flex-1 text-center text-sm py-2">
-          Audition state
+          Estado de audicion
         </Link>
       </div>
     </div>
@@ -99,10 +99,10 @@ export default function DashboardPage() {
             <h1 className="font-serif text-3xl font-bold text-ink-900">
               Hello, {firstName} 👋
             </h1>
-            <p className="text-sm text-ink-400 mt-1">Here are your audition preparations.</p>
+            <p className="text-sm text-ink-400 mt-1">Aqui tienes tus preparaciones.</p>
           </div>
           <Link to="/app/auditions/new" className="btn-primary shrink-0">
-            + New prep
+            + Nueva prep
           </Link>
         </div>
 
@@ -110,12 +110,12 @@ export default function DashboardPage() {
           /* Empty state */
           <div className="card text-center py-16 shadow-soft">
             <div className="text-5xl mb-4">🎭</div>
-            <h2 className="font-serif text-xl font-semibold text-ink-900 mb-2">No preparations yet</h2>
+            <h2 className="font-serif text-xl font-semibold text-ink-900 mb-2">Aun no tienes preparaciones</h2>
             <p className="text-sm text-ink-400 mb-6 max-w-xs mx-auto">
-              Upload your sides and start rehearsing with your AI scene partner.
+              Sube tu guion y empieza a ensayar con tu companero de escena IA.
             </p>
             <Link to="/app/auditions/new" className="btn-primary">
-              Create your first preparation
+              Crea tu primera preparacion
             </Link>
           </div>
         ) : (
@@ -130,7 +130,7 @@ export default function DashboardPage() {
               className="card border-dashed border-2 border-parchment-200 bg-transparent shadow-none hover:border-gold-400 hover:bg-parchment-50 transition-all duration-200 flex flex-col items-center justify-center gap-3 min-h-40 text-ink-400 hover:text-gold-500"
             >
               <span className="text-3xl">+</span>
-              <span className="text-sm font-medium">New audition preparation</span>
+              <span className="text-sm font-medium">Nueva preparacion</span>
             </Link>
           </div>
         )}

@@ -3,14 +3,15 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  base: '/hamlet/',
   plugins: [
     react(),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
       manifest: {
-        name: 'Audition Prep',
-        short_name: 'AuditionPrep',
+        name: 'Hamlet',
+        short_name: 'Hamlet',
         description: 'Prepare your audition sides with an AI scene partner',
         theme_color: '#1a1a2e',
         background_color: '#faf9f6',
